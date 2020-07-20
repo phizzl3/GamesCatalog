@@ -7,7 +7,6 @@ Yes, I realize OOP may not be the best way of doing some of this, but I'm new to
 Written on/for Python 3.7+ on MacOS.
 """
 
-import os
 import random
 import subprocess
 from pathlib import Path
@@ -18,7 +17,7 @@ from art import disp_art
 from games_class import Game
 
 init()  # Initialize colorama
-CWD = Path(os.path.realpath(__file__)).parent
+CWD = Path(__file__).resolve().parent
 RED = Fore.LIGHTRED_EX
 BLUE = Fore.LIGHTBLUE_EX
 RESET = Style.RESET_ALL
