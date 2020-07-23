@@ -14,7 +14,7 @@ from pathlib import Path
 from colorama import Fore, Style, init
 
 from art import disp_art
-from games_class import Game
+from classes import Game
 
 init()  # Initialize colorama
 CWD = Path(__file__).resolve().parent
@@ -53,7 +53,7 @@ def view_games(games):
     Switches output colors on each print."""
 
     # TODO: Change this to switch between color vars
-    disp_title()
+    disp_art()
     color_switch = 1
     for game in games:
         if color_switch == 1:
@@ -122,54 +122,49 @@ def name_search(games):
     find = input("Enter at least 3 letters to search: ")
 
     found = [g for g in games if find.lower() in g.name.lower()]
-    for i, gm in enumerate(found, 1):
-        print(f"{i}: {gm}")
+    if found:
+        for i, gm in enumerate(found, 1):
+            print(f"{i}: {gm}")
 
-    sel = input("Selection: ")
+        sel = input("Selection: ")
 
-    for game in games:
-        if found[int(sel)-1] == game:
-            return games.index(game)
+        for game in games:
+            if found[int(sel)-1] == game:
+                return games.index(game)
+    
+    else:
+        input("Game not found. Press ENTER.")
 
 
 def update_game(games):
     """Locates Game object in the list and allows info updates."""
     ndx = name_search(games)
 
-    options = {
-        '1': ("Name", games[ndx].set_name),
-        '2': ("System", games[ndx].set_system),
-        '3': ("Played", games[ndx].set_played),
-        '4': ("Completed", games[ndx].set_completed)
-    }
+    if ndx:
+        options = {
+            '1': ("Name", games[ndx].set_name),
+            '2': ("System", games[ndx].set_system),
+            '3': ("Played", games[ndx].set_played),
+            '4': ("Completed", games[ndx].set_completed)
+        }
 
-    method_call = menu_display(options)
+        method_call = menu_display(options)
 
-    update = input("New info: ")
-    method_call(update)
-    games.sort()
+        update = input("New info: ")
+        method_call(update)
+        games.sort()
 
 
 def remove_game(games):
     """Locates and deletes Game objects from the list."""
     ndx = name_search(games)
 
-    print(games[ndx])
-    if input("Remove?: ").lower() == 'y':
-        del games[ndx]
-        view_games(games)
-        write_file(games, 'y')
-
-
-def clear_screen():
-    """MacOS clear screen command."""
-    subprocess.run('clear', shell=True)
-
-
-def disp_title():
-    """Clear screen and display ASCII art."""
-    clear_screen()
-    disp_art()
+    if ndx:
+        print(games[ndx])
+        if input("Remove?: ").lower() == 'y':
+            del games[ndx]
+            view_games(games)
+            write_file(games, 'y')
 
 
 def menu_display(options):
@@ -177,7 +172,7 @@ def menu_display(options):
     returns 2nd item in tuple value.
     """
     while True:
-        disp_title()
+        disp_art()
         for num, pair in options.items():
             print(f"\t   {BLUE}[{num}]: {pair[0]}{RESET}")
 
@@ -210,7 +205,7 @@ def main():
     """
     games = read_data()
     while True:
-        disp_title()
+        disp_art()
         main_menu(games)
 
 
