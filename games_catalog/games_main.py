@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-"""This script is mainly me practicing a couple of different ways to use OOP/Classes 
+"""This script is mainly me practicing a couple of different ways to use OOP/Classes
 in python.
 It is used to maintain a list of games, their systems and completion status.
-Yes, I realize OOP may not be the best way of doing some of this, but I'm new to it. 
+Yes, I realize OOP may not be the best way of doing some of this, but I'm new to it.
 Written on/for Python 3.7+ on MacOS.
 """
 
@@ -21,7 +21,6 @@ CWD = Path(__file__).resolve().parent
 RED = Fore.LIGHTRED_EX
 BLUE = Fore.LIGHTBLUE_EX
 RESET = Style.RESET_ALL
-DELIM = ','
 
 
 def read_data():
@@ -29,7 +28,7 @@ def read_data():
     games = []
     with open(f'{CWD}/games.csv', 'r') as f:
         for line in f:
-            nm, sy, pl, cp = line.strip('\n').split(DELIM)
+            nm, sy, pl, cp = line.strip('\n').split(',')
             games.append(Game(nm, sy, pl, cp))
     return games
 
@@ -40,7 +39,7 @@ def write_file(games, conf='n'):
     """
     save = 'y'
     if conf == 'y':
-        save = input("Save changes?: ")
+        save = input("Save changes? (y/n): ")
     if save.lower() == 'y':
         with open(f"{CWD}/games.csv", "w") as f:
             for game in games:
@@ -54,6 +53,10 @@ def view_games(games):
 
     # TODO: Change this to switch between color vars
     disp_art()
+
+    print("{:43}: {:>6} - {:>6} - {:>9}".format("Game",
+          "System", "Played", "Completed"))
+    print("="*72)
     color_switch = 1
     for game in games:
         if color_switch == 1:
@@ -64,42 +67,38 @@ def view_games(games):
             color_switch = 1
         print(game)
         print(f"{RESET}", end='')
-    input("ENTER to return...")
+    input("\nENTER to return...")
 
 
 def search_games(games):
-    """Allows for search of list of Games objects by name, system, 
+    """Allows for search of list of Games objects by name, system,
     played, and completion and prints to console.
     """
-    # TODO: Possibly update this to use menu_disp
 
-    options = {'1': 'Name', '2': 'System',
-               '3': 'Played', '4': 'Completed'}
+    options = {
+        '1': ('Name', '1'),
+        '2': ('System', '2'),
+        '3': ('Played', '3'),
+        '4': ('Completed', '4')
+        }
 
-    for num, opt in options.items():
-        print(f"[{num}]: {opt}")
-    selection = input("Selection: ")
+    sel = menu_display(options)
 
     to_find = input("Search string: ")
 
-    for game in games:
-        if selection == '1':
-            if to_find.lower() in game.name.lower():
-                print(game)
-        if selection == '2':
-            if to_find.lower() in game.system.lower():
-                print(game)
-        if selection == '3':
-            if to_find.lower() in game.played.lower():
-                print(game)
-        if selection == '4':
-            if to_find.lower() in game.completed.lower():
-                print(game)
+    if sel == '1':
+        view_games([x for x in games if to_find.lower() in x.name.lower()])
+    if sel == '2':
+        view_games([x for x in games if to_find.lower() in x.system.lower()])
+    if sel == '3':
+        view_games([x for x in games if to_find.lower() in x.played.lower()])
+    if sel == '4':
+        view_games([x for x in games if to_find.lower() in x.completed.lower()])
 
 
 def random_game(games):
     """Randomly pull a game from the list and display to console."""
-    print(random.choice(games))
+    view_games([random.choice(games)])
 
 
 def add_game(games):
@@ -116,7 +115,7 @@ def add_game(games):
 
 
 def name_search(games):
-    """Searches for Game object in the list by name and returns 
+    """Searches for Game object in the list by name and returns
     the located Game object's list index.
     """
     find = input("Enter at least 3 letters to search: ")
@@ -131,7 +130,7 @@ def name_search(games):
         for game in games:
             if found[int(sel)-1] == game:
                 return games.index(game)
-    
+
     else:
         input("Game not found. Press ENTER.")
 
@@ -154,13 +153,16 @@ def update_game(games):
         method_call(update)
         games.sort()
 
+        view_games(games)
+        write_file(games, 'y')
+
 
 def remove_game(games):
     """Locates and deletes Game objects from the list."""
     ndx = name_search(games)
 
     if ndx:
-        print(games[ndx])
+        view_games([games[ndx]])
         if input("Remove?: ").lower() == 'y':
             del games[ndx]
             view_games(games)
@@ -168,7 +170,7 @@ def remove_game(games):
 
 
 def menu_display(options):
-    """Displays passed dictionary of menu items to the console, 
+    """Displays passed dictionary of menu items to the console,
     returns 2nd item in tuple value.
     """
     while True:
@@ -183,16 +185,16 @@ def menu_display(options):
 
 
 def main_menu(games):
-    """Display menu and run function based on return from menu_display, 
+    """Display menu and run function based on return from menu_display,
     passing games list.
     """
 
     options = {
         '1': ('View Games', view_games),
         '2': ('Search Games', search_games),
-        '3': ('Random Game', random_game),
+        '3': ('Random Game', random_game
         '4': ('Add Game', add_game),
-        '5': ('Update Game', update_game),
+        '5': ('Update Game', update_game
         '6': ('Remove Game', remove_game)
     }
 
@@ -200,10 +202,10 @@ def main_menu(games):
 
 
 def main():
-    """Main-Reads data from csv, creates Games objects based on the file, 
-    generates the main list of objects and calls the main menu. 
+    """Main-Reads data from csv, creates Games objects based on the file,
+    generates the main list of objects and calls the main menu.
     """
-    games = read_data()
+    games=read_data()
     while True:
         disp_art()
         main_menu(games)
