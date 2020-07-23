@@ -22,7 +22,7 @@ class Game:
 
     def __str__(self):
         # Create my own string output for my objects
-        return f"{self.name:43}: {self.system:6} - {self.played:3} - {self.completed:3}"
+        return f"{self.name:43}: {self.system:>6} - {self.played:>6} - {self.completed:>9}"
 
     def __eq__(self, other):
         # set up equal to
