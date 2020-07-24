@@ -192,9 +192,9 @@ def main_menu(games):
     options = {
         '1': ('View Games', view_games),
         '2': ('Search Games', search_games),
-        '3': ('Random Game', random_game
+        '3': ('Random Game', random_game),
         '4': ('Add Game', add_game),
-        '5': ('Update Game', update_game
+        '5': ('Update Game', update_game),
         '6': ('Remove Game', remove_game)
     }
 
