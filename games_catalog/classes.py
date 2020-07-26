@@ -113,7 +113,7 @@ class GamesList(list):
         for game in self:
             print(game)
         # Display total number of games
-        print("Total Games: {Game.get_total_games()}")
+        print(f"\nTotal Games: {Game.get_total_games()}")
 
         input("\nENTER to return...")
 
