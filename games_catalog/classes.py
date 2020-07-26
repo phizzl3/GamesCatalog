@@ -10,7 +10,7 @@ from pathlib import Path
 
 from art import disp_art
 
-FILE = f"{Path(__file__).resolve().parent}/games.csv"
+FILE = f"{Path(__file__).resolve().parent}/data/games.csv"
 
 
 class Game:
