@@ -3,10 +3,6 @@
 ## Requirements
 
 * Python 3.7+
-* colorama
 
-```bash
-python3 -m pip install colorama
-```
-
+Catalogs, displays, and updates a list of games.  
 Just messing around with classes, etc while I learn Python.  
