@@ -15,31 +15,6 @@ from classes import Game, GamesList
 
 
 
-from colorama import Fore, Style, init
-
-init()  # Initialize colorama
-RED = Fore.LIGHTRED_EX
-BLUE = Fore.LIGHTBLUE_EX
-RESET = Style.RESET_ALL
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def menu_display(options):
     """Displays passed dictionary of menu items to the console,
     returns 2nd item in tuple value.
@@ -47,7 +22,7 @@ def menu_display(options):
     while True:
         disp_art()
         for num, pair in options.items():
-            print(f"\t   {BLUE}[{num}]: {pair[0]}{RESET}")
+            print(f"\t  [{num}]: {pair[0]}")
 
         sel = input("\nSelection: ")
         if options.get(sel):
