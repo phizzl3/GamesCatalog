@@ -25,7 +25,6 @@ def main_menu(games):
     }
 
     while True:
-        disp_art()
         for num, pair in options.items():
             print(f"\t  [{num}]: {pair[0]}")
 
