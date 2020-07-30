@@ -179,6 +179,7 @@ class GamesList(list):
         # Generate list of found objects and display to console
         found = [g for g in self if find.lower() in g.name.lower()]
         if found:
+            GamesList.disp_header()
             for i, gm in enumerate(found, 1):
                 print(f"{i}: {gm}")
 
