@@ -4,7 +4,7 @@
 in python.
 It is used to maintain a list of games, their systems and completion status.
 Yes, I realize OOP may not be the best way of doing some of this, but I'm new to it.
-Written on/for Python 3.7+ on MacOS.
+Written on/for Python 3.6+ on MacOS.
 """
 
 
