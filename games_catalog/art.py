@@ -14,10 +14,13 @@ def disp_art():
         """
 
     # Clear screen based on MacOS/Win (only)
-    if platform.system() == 'Darwin':
-        subprocess.run('clear', shell=True)
-    else:
-        os.system('cls')
+    try:
+        if platform.system() == 'Darwin':   
+            subprocess.run('clear', shell=True)
+        if platform.system() == 'Windows':
+            os.system('cls')
+    except PermissionError:
+        pass
     
     print(art)
 
