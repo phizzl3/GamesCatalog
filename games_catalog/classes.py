@@ -163,7 +163,7 @@ class GamesList(list):
         cp = input("Finished it?: ")
 
         # Add new object
-        self.append(Game(nm, sy, cp, pl))
+        self.append(Game(nm, sy, pl, cp))
 
         # Sort, display, and write list
         self.sort()
