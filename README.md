@@ -7,6 +7,11 @@
 Catalogs, displays, and updates a list of games.  
 Just messing around with classes, etc while I learn Python.  
 
-### Run file:  
+### Needs
+
+Needs a csv file with "game, system, played, finished" in a folder to run currently  
+./data/games.csv
+
+### Run file
 
 ./gamescat/gamescat.py  
